@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+    .box{
+        width:204px;
+        height: 100px;
+        border:1px solid #ccc;
+    }
+    .title{
+        display: inline-block;
+        background: lightblue;
+        font-size: 18px;
+        padding:5px 6px;
+        border:1px solid #eee;
+        text-align:center;
+    }
+    .title:hover{
+        background: lightgreen;
+    }
+    .box div{
+        width: 100%;
+        padding:20px 2px;
+        box-sizing: border-box;
+    }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="box">
+            <span class="title" v-for="(item,index) in title" v-on:click="click(index)">{{item}}</span>
+            <div  v-show="item.show"  v-for="(item,index) in content" >{{item.title}}</div>
+        </div>
+    </div>
+    <script>
+    const vm = new Vue({
+        el : '#app',
+        data : {
+            title : ["选项一","选项二","选项三"],
+            content :  [
+              {
+                  show:true,"title":"1111"
+              },
+              {
+                show:false,"title":"2222"
+              },
+              {
+                show:false,"title":"3333"
+              }]
+        },
+        methods :{
+            click(index){
+                 for(var i = 0; i < this.content.length;i++){
+                     this.content[i].show = false;
+                     if(i == index){
+                         this.content[index].show = true;
+                     }
+                 }
+            }
+        }
+        
+    })
+    
+    </script>
+</body>
+</html>
