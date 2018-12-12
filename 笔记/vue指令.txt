@@ -22,9 +22,9 @@ vue指令
 一、双向和单项绑定
 1、v-model 双向绑定指令（用它绑定的变量，既可以展示那个变量，也可以改变那个变量，用于表单元素）
 2、{{变量名}}  插值表达式 （它只是用来输出展示的，单项绑定）
-3、v-bind  单项绑定（可以绑定到html的任意一个属性上）
+3、v-bind  单项绑定（可以绑定到html的任意一个属性上）,给属性绑定动态值
 4、v-html  绑定html元素
-5、v-text  绑定文本
+5、v-text  绑定文本,和插值表达式不同的是插值表达式可以插入多个表达式，而v-text只能绑定一条
 
 二、列表渲染
 v-for="循环表达式" 
@@ -47,3 +47,30 @@ v-for="循环表达式"
 
   v-if   元素较多且不需要频繁展示时使用，减少消耗内存，性能较好
   v-show 如果元素需要频繁地显示和隐藏
+
+  v-else-if
+  v-else
+
+四、绑定事件
+   v-on  给元素绑定事件，不是原生html事件处理方式
+   如果带了括号，则不传递事件对象
+   不带括号则默认传递一个事件对象的参数
+   <button v-on:click="click(100,$event)">点击</button> 这样就可以同时拿到参数和事件对象，兼容火狐
+   <input type="text" v-on:keydown="keydown">
+   <input type="text" v-on:input="keydown">  input事件反应比keydown事件快
+
+五、扩展功能
+ v-bind:style
+ v-bind:class
+ 可以在里面添加数组和对象  加上v-bind了之后，后面输入代码的区域就相当于js编辑代码区域
+ <div v-bind:style="{
+            backgroundColor : 'red',
+            height:'100px'
+        }">34344</div>     
+不用预设，直接给值，性能差一些
+
+<div v-bind:class="{
+           active:true
+        }">haha</div>    
+如果包含对象，对象的key是class名，对象value来决定样式是否要添加
+class切换性能高一些，但是需要提前预设好样式

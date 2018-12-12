@@ -8,33 +8,117 @@
     <script src="vue.js"></script>
     <style>
         div{
-            border:1px solid blue;
+            /* border:1px solid blue; */
         }
     span{
         border:1px solid red;
         margin-right: 10px;
     }
+    .box{
+        background: lightblue;
+    }
+    .active{
+       background :lightcyan; 
+       border:1px solid red;  
+    }
     </style>
 </head>
 <body>
     <div id="app">
-        {{input}}
-        <input type="text" v-model="input">
+        <!-- {{input}}
+        <input type="text" v-model="input"> -->
         <ul>
-            <li v-for="item in user">
-                <span v-for="item in item">{{item}}</span>
+            <li v-for="(item,index) in user" v-on:click="deleteuser(index)" v-on:add="add(name,age)">
+                <span v-for="item in item">{{item}}</span "><button>删除</button>
             </li>
         </ul>
         <div v-for="(item,index) in 9">
             <span v-for="(col,colIndex) in item">{{col}}*{{item}} = {{(col)*(item)}}</span>
         </div>
+        <!-- <div v-for="(item,index) in 100" v-if="index < 10">{{item}}</div> -->
 
+        <div v-bind:class="'box'">2323</div>
+        <div v-bind:class="classname">2323</div>
+        <div v-bind:style="'background:red'">2323</div>
+        <div v-bind:style="'background:'+color">2323</div>
+        <input type="text" v-model="color">
+        <div v-bind:style="'background:rgba(0,0,0,'+alpha/100+')'">2323</div>
+        <div v-bind:index="alpha">2323</div>
+        {{alpha}}<input type="range" v-model="alpha">
+
+        <button v-on:click="click(100,$event)">点击</button>
+        <input type="text" v-on:keydown="keydown">
+        <input type="text" v-on:input="keydown">
+        <div v-bind:class="moved ? 'active' : ''" v-on:mousemove="mouseMove" v-on:mouseout="moved = false">moved</div>
+        
+        <button v-on:click="showDiv = !showDiv">切换</button>
+        <div v-show="showDiv">2324</div>
+
+        <div v-text="text"></div>
+        <div >{{text}}{{text}}</div>
+        <div v-html="text"></div>
+        <textarea  cols="30" rows="10" v-model="text"></textarea>
+ 
+        <div v-if="text == 1">1</div>
+        <div v-else-if="text == 2">2</div>
+        <div v-else="text == 2">其他任意内容显示</div>
+
+        <div v-bind:style="{
+            background : 'red',
+            height:'100px'
+        }">34344</div>
+        <div v-bind:style="[classes,styles]">34344</div>
+        <div v-bind:style="{
+            background : color
+        }">34344</div>
+
+        <div v-bind:class="{
+           active:true
+        }">haha</div>
     </div>
     <script>
     const vm = new Vue({
         el:'#app',
+        methods : {
+             click(a,e){
+                 alert(a)
+                 console.log(e)
+             },
+             deleteuser(index){
+                 this.user.splice(index,1)
+
+             },
+             add(name,age){
+                 this.user.push({
+                     name,
+                     age
+                 })
+             },
+             keydown(e){
+                 console.log(e)
+             },
+             mouseMove(){
+                 this.moved = true;
+             }
+        },
         data : {
+            classes:{
+                background : 'red',
+            height:'100px'
+            },
+            styles : {
+                fontSize :'30px',
+                color : 'blue',
+                height:'50px'
+            },
+            text:'',
+            showDiv : true,
+            moved : false,
+            classname : "active test",
+            index : 10,
+            alpha : 1,
             input : "hello",
+            color: 'green',
             title : "你好",
             user : [
                 {
