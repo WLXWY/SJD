@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,18 +8,20 @@
     <title>Document</title>
     <script src="vue.js"></script>
     <style>
-    .box{
-        background-color:blueviolet
-    }
-    .box2{
-        background: red;
-    }
+        .box {
+            background-color: blueviolet
+        }
+
+        .box2 {
+            background: red;
+        }
     </style>
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
 </head>
+
 <body>
     <div id="app">
-       
+
         <!-- <ul>
             <li v-for = "item in arr">{{item}}</li>
         </ul>
@@ -32,97 +35,86 @@
         </ul>
         <ul>
             <li v-for="(item,i) in menu">{{item.title}}
-                    <ul>
-                        <li v-for="child in item.children">{{child.title}}
-                            <ul>
-                                <li v-for="child in child.children">{{child.title}}</li>
-                            </ul>
-                        </li>
-                    </ul>
-             </li>
-                
-            </ul>
+                <ul>
+                    <li v-for="child in item.children">{{child.title}}
+                        <ul>
+                            <li v-for="child in child.children">{{child.title}}</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
     </div>
     <script>
         const vm = new Vue({
-            el : '#app',//绑定app
-            data : {
-                input :'你好',
-                content:'<h1>你好a</h1>',
-                user : {
-                name : "张三",
-                age : 20,
-                sex : "男"
+            el: '#app', //绑定app
+            data: {
+                input: '你好',
+                content: '<h1>你好a</h1>',
+                user: {
+                    name: "张三",
+                    age: 20,
+                    sex: "男"
                 },
-                arr : [
+                arr: [
                     '菜单1',
                     '登录',
                     '注册',
                     '注册'
                 ],
-                menu : [
-                       {
-                     title:"菜单项目1",
-                     children : [
-                         {
-                         title : "子菜单1",
-                         children:[
-                             {
-                                 title:"三级子级菜单1"
-                             },
-                             {
-                                title:"三级子级菜单2"
-                             }
-                         ]
-                         },
-                         {
-                        title : "子菜单2",
-                        children:[
-                             {
-                                 title:"三级子级菜单1"
-                             },
-                             {
-                                title:"三级子级菜单2"
-                             }
-                         ]
-                         }
-                     ]
+                menu: [{
+                        title: "菜单项目1",
+                        children: [{
+                                title: "子菜单1",
+                                children: [{
+                                        title: "三级子级菜单1"
+                                    },
+                                    {
+                                        title: "三级子级菜单2"
+                                    }
+                                ]
+                            },
+                            {
+                                title: "子菜单2",
+                                children: [{
+                                        title: "三级子级菜单1"
+                                    },
+                                    {
+                                        title: "三级子级菜单2"
+                                    }
+                                ]
+                            }
+                        ]
                     },
                     {
-                        title:"菜单项目2",
-                        children : [
-                         {
-                         title : "子菜单1",
-                         children:[
-                             {
-                                 title:"三级子级菜单1"
-                             },
-                             {
-                                title:"三级子级菜单2"
-                             }
-                         ]
-                         },
-                         {
-                        title : "子菜单2",
-                        children:[
-                             {
-                                 title:"三级子级菜单1"
-                             },
-                             {
-                                title:"三级子级菜单2"
-                             }
-                         ]
-                         }]
+                        title: "菜单项目2",
+                        children: [{
+                                title: "子菜单1",
+                                children: [{
+                                        title: "三级子级菜单1"
+                                    },
+                                    {
+                                        title: "三级子级菜单2"
+                                    }
+                                ]
+                            },
+                            {
+                                title: "子菜单2",
+                                children: [{
+                                        title: "三级子级菜单1"
+                                    },
+                                    {
+                                        title: "三级子级菜单2"
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 ]
             }
         })
-        
-
-        
-         
-
-
     </script>
 </body>
+
 </html>

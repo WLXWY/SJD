@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="vue.js"></script>
+    <style>
+        div{
+            border:1px solid blue;
+        }
+    span{
+        border:1px solid red;
+        margin-right: 10px;
+    }
+    </style>
+</head>
+<body>
+    <div id="app">
+        {{input}}
+        <input type="text" v-model="input">
+        <ul>
+            <li v-for="item in user">
+                <span v-for="item in item">{{item}}</span>
+            </li>
+        </ul>
+        <div v-for="(item,index) in 9">
+            <span v-for="(col,colIndex) in item">{{col}}*{{item}} = {{(col)*(item)}}</span>
+        </div>
+
+    </div>
+    <script>
+    const vm = new Vue({
+        el:'#app',
+        data : {
+            input : "hello",
+            title : "你好",
+            user : [
+                {
+                    name : "张三",
+                    age : 20
+                },
+                {
+                    name : "李四",
+                    age : 22
+                },
+                {
+                    name : "王五",
+                    age : 25
+                }
+            ]
+        }
+    })
+    </script>
+</body>
+</html>
