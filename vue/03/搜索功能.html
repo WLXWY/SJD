@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="search">
+        <ul>
+            <li v-for="item in userList">{{item}}</li>
+        </ul>
+
+    </div>
+    <script>
+    const vm = new Vue({
+        el : '#app',
+        data : {
+            search : '',
+            users : [
+                "张三",
+                "李四",
+                "老王",
+                "赵六"
+            ]
+        },
+        computed :{
+            userList(){
+                return this.users.filter((value,index,arr) => {
+                    console.log(value.indexOf(this.search))//如果存在就返回0，不存在就返回-1
+                return !!~value.indexOf(this.search)//~ 给数字加1
+                })
+            }
+        }
+
+    })
+    </script>
+</body>
+</html>

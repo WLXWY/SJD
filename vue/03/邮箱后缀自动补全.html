@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="vue.js"></script>
+    <style>
+    .input{
+        width: 200px;
+        height: 35px;
+        position: relative;
+        border:1px solid #ddd;
+    }
+    .input input{
+        width: inherit;
+        height: inherit;
+    }
+    .input ul{
+        list-style:none;
+        padding:0;
+        border:1px solid #ddd;
+        border-bottom: 1px solid #fff;
+        width: inherit;
+    }
+    .input ul li{
+        height: 30px;
+        line-height:30px;
+        border-bottom: 1px solid #ddd;
+    }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="input">
+            <input type="text" v-model="value">
+            <ul v-if="value && emailList.length > 0">
+                <li @click="select(item)" v-for="item in emailTypes">{{item}}</li>
+            </ul>
+        </div>
+        <input type="text" v-model="emailType">
+        <button @click="emailTypes.push(emailType),emailType=''">添加邮箱类型</button>
+    </div>
+    <script>
+    const vm = new Vue({
+        el:'#app',
+        data : {
+            value : 'xxx',
+            emailType:'',
+            emailTypes : ['@qq.com','@163.com','@gamil.com','@live.com']
+        },
+        computed : {
+            emailList(){
+                if(/@/.test(this.value))return [];
+                const arr = [];
+                for(let index in this.emailTypes){
+                    arr[index] = this.value + this.emailTypes[index];
+                }
+                return [
+                   this.value + '@qq.com',
+                   this.value + '@163.com',
+                   this.value + '@gamil.com',
+                   this.value + '@live.com'
+                ]
+            }
+        },
+        methods : {
+            select(item){
+                this.value = item;
+            }
+
+        }
+    })
+    </script>
+</body>
+</html>

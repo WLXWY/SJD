@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // arr.forEach       遍历数组，但是不会有返回结果
+        // arr.map           用于生成一个长度和原数组相同的新数组，如果没有设置返回值，新数组的值都为undefined，
+        //                    根据原数组组成一个新数组
+        // arr.filter        可以用于检索数据，根据原数组的内容过滤想要的内容
+        // arr.find          查询找到的成员
+        // arr.findIndex     查询找到成员的下标
+        // 参数
+        // value  循环出来的每一个项目
+        // index  循环的下标
+        // arr    原始数组
+
+        // var arr = [{name:"张三"},{name:"李四"}]
+        // arr.map(function (value, index, arr) {
+        //     return value
+        // })
+        // arr.filter(function(value, index, arr){
+        //     //循环每一项时，如果返回true，该选项就会被保留到新数组，反之不保留
+        //     return true ;//  /张/g.test(value.name)
+        // })
+        // arr.find(function(value, index, arr){
+        //     //从数组里找到一个与条件匹配的成员就返回
+        //     return value.name === "张三"; // /张/g.test(value.name)  返回结果{name:"张三"}
+        // })
+
+        // function run(a,v){return a+v;}
+        // const run = (a,v) => a+v;//函数体内只有一行代码时，可以使用这种写法
+        // const run = (a,v) => {const c = 2;return a+c+v;}//函数体内有多行代码时，不能省略花括号
+        // const run = a => a + 199;//函数只有一个参数时，可以省略括号，函数体不加花括号默认带return效果
+        // const run = a => {return a};//函数只有一个参数时，可以省略括号，加括号时必须手动return
+        // const run = () => {return a};//函数没有参数时，该位置也不能留空，要加括号
+
+        //对象解构
+        //对象解构赋值
+        //必须按照对象key名称来获取，但是不分先后顺序
+
+        var obj = {name:"张三",age:20}
+        console.log(obj.name)//用.的方式访问，太消耗效率
+        const {name,age,xxx='cc'} = obj;
+        console.log(xxx)
+        
+        //数组解构要按照数组的顺序解构
+        const str = 'http://www.baidu.com:3000';
+        const split = str.split(':');
+        const [protocol,host,port] = split;
+        console.log(host)
+        //...在数组解构时代表取剩下的部分
+        const [protocol,...more] = split;
+        console.log(protocol,more)
+        //...在生成新数组时，代表的是混入...数组里的所有成员到当前数组，不然more展示的是一个数组
+        console.log('https',more) //['https',Array(2)]
+        console.log('https',...more)//['https','//www.baidu.com','3000']
+        console.log(['https',...more].join(':'))//'http://www.baidu.com:3000'
+
+        // ...不仅可以用在数组，也可以用在对象
+        const obj1 = {
+            name : 'xx',
+            age : 20,
+            children : [1,2,3],
+            color : 'red'
+        }
+        //在作为对象解构时，可以取出剩余部分成员
+        const {name,age,...xxx} = obj;
+        //在作为生成新对象时，可以合并当前对象的成员到新的对象里面
+        const a = {
+            name : "哈哈",
+            ...xxx
+        }
+        //a 里面的...部分就跟obj1一样
+
+    </script>
+</body>
+
+</html>

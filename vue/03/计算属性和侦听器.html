@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{val}}
+        <!-- {{getValue()}} -->
+        <!--在methods里面访问要加括号-->
+        {{getValue}}
+        <!--在computed里面访问不用加括号-->
+        <input type="text" v-model="title">
+        <input type="text" v-model="value">
+        <input type="text" v-model="val">
+    </div>
+    <script>
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                value:'',
+                title:'',
+                val:''
+            },
+            methods:{
+                // getValue(){
+                //     console.log(1)
+                //     return this.title = '@' + this.value;  val发生改变也会触发这个函数运行
+                // }
+       
+            },
+            watch:{
+                value(newVal,oldVal){
+                    if(/\d/g.test(newVal)){
+                        this.value = newVal.replace(/\d/g,'');//不能添加数字
+                    }
+                }
+            },
+            computed:{
+                getValue(){
+                    console.log(1)
+                    return '@' + this.value + this.title;
+                }
+            }
+
+        })
+    
+    </script>
+</body>
+</html>
