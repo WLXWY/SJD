@@ -21,13 +21,14 @@
         <div class="box" @click="click('父元素')">
             <button @click.stop="click('子元素',$event)">按钮</button>
         </div>
+        <input type="text" value="xxxx" @keyown.prevent="input">
     </div>
     <script>
         const vm = new Vue({
             el: '#app',
             methods: {
-                click(e,event) {
-
+                input(event){
+                //   event.preventDefault();//阻止默认事件
                 }
             }
         })
