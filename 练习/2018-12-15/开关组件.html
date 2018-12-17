@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+    .switchers{
+        width: 50px;
+        height: 20px;
+        border-radius: 22px;
+        padding-left: 1px;
+        background: #ccc;
+        border:1px solid #ccc;
+        transition: background linear 0.2s;
+    }
+    .switchers.large{
+        width: 70px;
+        height: 25px;
+        border-radius: 28px;
+    }
+    .switchers.middle{
+        width: 50px;
+        height: 20px;
+        border-radius: 22px;
+    }
+    .switchers.small{
+        width: 38px;
+        height: 15px;
+        border-radius: 17px;
+    }
+    .switchers .btn{
+        width: 20px;
+        height: 20px;
+        background: #fff;
+        border-radius: 100%;
+        transform: translateX(0px);
+        transition:transform linear 0.2s
+     }
+     .switchers.large .btn{
+        width: 23px;
+        height: 24px;
+    }
+    .switchers.middle .btn{
+        width: 20px;
+        height: 20px;
+    }
+    .switchers.small .btn{
+        width: 15px;
+        height: 15px;
+    }
+    /* 开启状态 */
+    .switchers.on{
+        background: #2d8cf0;
+        border:1px solid #2d8cf0;
+        transition: background linear 0.2s;
+    }
+    .switchers.on .btn{
+        transform: translateX(29px);
+        transition:transform linear 0.2s
+    }
+
+    .switchers.large.on .btn{
+        transform: translateX(46px);
+        transition:transform linear 0.2s
+    }
+    .switchers.middle.on .btn{
+        transform: translateX(29px);
+        transition:transform linear 0.2s
+    }
+    .switchers.small.on .btn{
+        transform: translateX(22px);
+        transition:transform linear 0.2s
+    }
+    </style>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <script>
+        Vue.component('Switchers',{
+            props:{
+                size:{
+                    validator(value){
+                        if(!/(large|middle|small)/.test(value)){
+                            alert("没有该尺寸的开关")
+                        }
+                        return /(large|middle|small)/.test(value)
+                    }
+                }
+            },
+            template:`
+            <div :class="['switchers',size,{on:value}]" @click="value = !value">
+                <div class="btn"></div>
+            </div>
+            `,
+            data(){
+                return{
+                    value:false
+                }
+            },
+        })
+    const vm = new Vue({
+        el : '#app',
+        template:`
+        <Switchers :size="size" />
+        `,
+        data:{
+            size:'middle'
+        }
+    })
+    </script>
+</body>
+</html>

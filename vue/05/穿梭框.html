@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+    .transfer{
+        display: flex;
+        justify-content: space-between;
+    }
+    .transfer .left,.transfer .left{
+        width:300px;
+    }
+    .transfer .middle{
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .transfer .middle button{
+        width:100px;
+    }
+    </style>
+</head>
+<body>
+    <div id="app">
+           
+    </div>
+    <script>
+        Vue.component('transfer',{
+            props : {
+                data1 : Array,
+                data2 : Array
+            },
+            template : `
+            <div class="transfer">
+            <div class="left">
+                    全选<input type="checkbox" v-model="selectAll1">
+               <ul>
+                  <li v-for="item in arr1">
+                     <input type="checkbox" v-model="item.checked">{{item.title}}
+                   </li>
+               </ul>
+            </div>
+            <div class="middle">
+               <button :disabled="btn1State" @click="handleMoveToRight">右移</button>
+               <button :disabled="btn2State"  @click="handleMoveToLeft">左移</button>
+             </div>
+            <div class="right">
+                    全选<input type="checkbox" v-model="selectAll2">
+                    <ul>
+                  <li v-for="item in arr2">
+                     <input type="checkbox" v-model="item.checked">{{item.title}}
+                   </li>
+               </ul>
+            </div>
+            </div>
+            `,
+            data(){
+                return {
+                    selectAll1:false,
+                    selectAll2:false,
+                    arr1:this.data1,
+                    arr2:this.data2,
+                }
+            },
+            //用watch监听不到对象或数组的成员变化，添加deep只能监听已有成员的变化，但是无法监听新增成员
+            watch:{
+                selectAll1(val){
+                    this.arr1.forEach(item => {
+                        item.checked = val;
+                    });
+                },
+                selectAll2(val){
+                    this.arr2.forEach(item => {
+                        item.checked = val;
+                    });
+                }
+                // arr1:{
+                //     handler(val){
+                //        if(this.arr1.find((item) => item.checked)){
+                //            this.btn1 = false;
+                //        }else{
+                //         this.btn1 = true;
+                //        }
+                //     },
+                //     deep:true
+                // },
+                // arr2:{
+                //     handler(val){
+                //         if(this.arr2.find((item) => item.checked)){
+                //             this.btn2 = false;
+                //         }else{
+                //             this.btn2 = true;
+                //         }
+
+                //     },
+                //     deep:true
+                // }
+            },
+            computed:{
+                btn1State(){
+                    if(this.arr1.find((item) => item.checked)){
+                        return false;
+                    }else{
+                        return true;
+                    }
+                },
+                btn2State(){
+                    if(this.arr2.find((item) => item.checked)){
+                        return false;
+                    }else{
+                        return true;
+                    }
+                }
+            },
+            methods : {
+                handleMoveToRight(){
+                   const matchs = JSON.parse(JSON.stringify(this.arr1.filter((item) => item.checked)));
+                   const filters = this.arr1.filter((item) => !item.checked);
+                   this.arr1 = filters;
+                   this.arr2.push(...matchs.map((item) => {
+                       item.checked=false;
+                       return item;
+                       }));
+                    this.selectAll1 = false;
+                },
+                handleMoveToLeft(){
+                    const matchs = JSON.parse(JSON.stringify(this.arr2.filter((item) => item.checked)));
+                    const filters = this.arr2.filter((item) => !item.checked);
+                   this.arr2 = filters;
+                   this.arr1.push(...matchs.map((item) => {
+                       item.checked=false;
+                       return item;
+                       }));
+                       this.selectAll2 = false;
+                }
+            }
+        })
+    const vm = new Vue({
+        el : '#app',
+        template:`
+        <div id="app">
+           <transfer :data1="data1" :data2="data2"/>
+        </div>
+        `,
+        data :{
+            data1:[
+                {
+                    checked : false,
+                     title : "value1" 
+                },
+                {
+                    checked : false,
+                     title : "value2" 
+                },
+                {
+                    checked : false,
+                     title : "value3" 
+                },
+                {
+                    checked : false,
+                     title : "value4" 
+                },
+                {
+                    checked : false,
+                     title : "value5" 
+                },
+                {
+                    checked : false,
+                     title : "value6" 
+                }
+            ],
+            data2:[
+                {
+                    checked : false,
+                     title : "value7" 
+                },
+                {
+                    checked : false,
+                     title : "value8" 
+                },
+                {
+                    checked : false,
+                     title : "value9" 
+                },
+                {
+                    checked : false,
+                     title : "value10" 
+                },
+                {
+                    checked : false,
+                     title : "value11" 
+                },
+                {
+                    checked : false,
+                     title : "value12" 
+                }
+            ]
+        }
+
+    })
+    </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+       .Switcher{
+           width: 44px;
+           height: 22px;
+           border-radius: 22px;
+           border:1px solid #ccc;
+           background:#ccc;
+           transition: background linear 0.2s;
+       }
+       .Switcher.on{
+            border:1px solid #2d8cf0;
+           background:#2d8cf0;
+       }
+       .Switcher .btn{
+           width: 22px;
+           height: 22px;
+           background: #fff;
+           border-radius: 100%;
+
+       }
+       .Switcher.on .btn{
+           transform: translateX(22px);
+           transition: transform linear 0.2s;
+       }
+    </style>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <script>
+        Vue.component('Switcher',{
+            props:{
+                value:Boolean
+            },
+            template:`
+              <div @click="iValue = !iValue" :class="['Switcher',{on:iValue}]" >
+                <div class="btn"></div>
+              </div>
+            `,
+            data(){
+                return {
+                    iValue:this.value//在初始化时，因为布尔值是栈数据，不能和父级的value值同步变化
+                }
+            },
+            watch:{
+                value(val){
+                    // console.log("父级传递的value值发生了改变",val)
+                    this.iValue = val;
+                },
+                iValue(val){
+                    // this.$emit('update',val)
+                    this.$emit('input',val)
+                }
+            }
+        })
+    const vm = new Vue({
+        el : '#app',
+        template:`
+        <div>
+        {{value}}
+        <Switcher @update="val => value=val" :value="value"/>
+        <Switcher @update="update" :value="value"/>
+        <Switcher v-model="value" :value="value"/>
+         <button @click="value = !value">toggle</button>
+        </div>
+        `,
+        data:{
+            value:true
+        },
+        methods:{
+            //在父级组件里面调用
+            update(val){
+                console.log(val)
+                this.value = val;
+            }
+        }
+    })
+    </script>
+</body>
+</html>

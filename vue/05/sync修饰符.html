@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <script>
+        Vue.component('Test',{
+            props:{
+                value:Number,
+                result:Number
+            },
+            template:`
+            <div class="test">
+            <input type="text" v-model.number="iValue"/>
+            + 100 = {{iResult}}
+            </div>
+            `,
+            data(){
+                return{
+                    iValue : this.value,
+                }
+            },
+            watch:{
+                value(val){
+                    // console.log(val)
+                    this.iValue = val
+                },
+                iValue(val){
+                    // console.log(val)
+                    this.$emit('input',val);
+                    // this.iResult = val + 100;
+                }
+            },
+            computed:{
+               iResult(){
+                   const data = this.value + 100;
+                   this.$emit('update:result', data)
+                    return data
+                }
+            }
+        })
+    const vm = new Vue({
+        el : '#app',
+        template:`
+        <div>
+        <Test v-model="test" :result.sync="result"/>
+        <input type="text" v-model.number="test"/>{{result}}
+        </div>
+        `,
+        data:{
+            test:1001,
+            result:0
+        }
+    })
+    </script>
+</body>
+</html>
