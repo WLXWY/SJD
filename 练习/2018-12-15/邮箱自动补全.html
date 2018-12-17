@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        *{
+            margin:0;
+            padding: 0;
+        }
+      .container{
+          width: 180px;
+          margin:30px auto;
+          /* border:1px solid red; */
+      }
+      .container input{
+          width: 180px;
+          height: 25px;
+
+      }
+      .container ul{
+          width: 184px;
+          box-sizing: border-box;
+          list-style: none;
+      }
+      .container ul li{
+           padding: 2px ;
+           margin-bottom: 2px;
+      }
+      .container ul li.active{
+          background: #ccc;
+      }
+      
+    </style>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <script>
+        Vue.component('emails',{
+            props:{
+                value:Array
+            },
+            template:`
+            <div class="container">
+            <input type="text" v-model="iValue" @keydown.up.prevent="up" @mousemove="mousemove"  @keydown.down.prevent="down"  @keydown.enter.prevent="enter"/>
+            <ul>
+               <li v-show="isShow" :class="{active:index==selectedIndex}" v-for="(item,index) in emailList" @click="select(item)" @mousemove="mousemove(index)" >{{item}}</li>
+            </ul>
+            </div>
+            `,
+            computed:{
+                emailList(iValue){
+                    if(/@/.test(this.iValue)) return [];
+                    const arr=[];
+                    this.emailTypes.forEach((item,index) => {
+                        arr.push(this.iValue + item)
+                    });
+                    return arr;
+                }
+            },
+            data(){
+                return{
+                    isShow:false,
+                emailTypes: this.value,
+                iValue:'',
+                selectedIndex : 0
+                }
+            },
+            methods:{
+                select(item){
+                    this.iValue = item;
+                },
+                up(){
+                    this.selectedIndex --;
+
+                },
+                down(){
+                    this.selectedIndex ++;
+                },
+                enter(){
+                    if(this.emailList.length == 0) return;
+                    this.iValue = this.emailList[this.selectedIndex];
+                },
+                mousemove(index){
+                    this.selectedIndex = index;
+                }
+            },
+            watch:{
+                selectedIndex(val){
+                    if(val < 0 ){
+                        this.selectedIndex = this.emailList.length - 1;
+                    }
+                    if(val >= this.emailList.length){
+                        this.selectedIndex = 0;
+                    }
+                },
+                iValue(val){
+                    this.isShow = true;
+                    if(val == ""){
+                        this.isShow = false;
+                    }
+                }  
+            }
+        })
+    const vm = new Vue({
+        el : '#app',
+        template:`
+        <div id="app">
+        <emails v-model="value" />
+        </div>
+        `,
+        data:{
+            value:['@qq.com', '@163.com', '@gamil.com','@sina.com']
+        }
+    })
+    </script>
+</body>
+</html>

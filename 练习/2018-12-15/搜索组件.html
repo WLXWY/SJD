@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            display: flex;
+            justify-content: center;
+        }
+        .searBox{
+            margin:30px auto;
+        }
+     .searBox .search{
+         width: 230px;
+         height: 30px;
+         padding:3px;
+         background: rgb(86, 86, 255);
+         line-height: 30px;
+         position: relative;
+     }
+     .searBox .search input{
+         position: absolute;
+         top:4px;
+         padding:5px;
+     }
+     .searBox .search>span{
+         padding:0 8px;
+         color:#fff;
+         font-size: 16px;
+         position: absolute;
+         right:3px;
+     }
+     .searBox>ul{
+         list-style: none;
+         
+     }
+     .searBox>ul li{
+        padding:2px;
+         margin-bottom: 2px;
+     }
+     .searBox>ul li.active{
+        background: #ccc;
+     }
+    </style>
+</head>
+<body>
+    <div id="app">
+       
+    </div>
+    <script>
+        Vue.component('Search',{
+            props:{
+                value:Array
+            },
+            template:`
+            <div class="searBox">
+                <div class="search">
+                    <input type="text" v-model="iValue" @keydown.up.prevent="up"   @keydown.down.prevent="down"  @keydown.enter.prevent="enter" />
+                    <span @click="search" >搜索</span>
+                </div>
+                <ul v-if="onOff">
+                    <li  v-show="isShow" :class="{active:index == selectedIndex}" @mousemove="mousemove(index)" v-for="(item,index) in messesList" @click="select(item)">{{item}} </li>
+                </ul>
+            </div>
+            `,
+            data(){
+                return{
+                    messes:this.value,
+                    iValue:'',
+                    selectedIndex : 0,
+                    isShow:true,
+                    onOff:false
+                }
+            },
+            computed:{
+                messesList(){
+                   return this.messes.filter((value, index, arr) => {
+                    // return !!~value.indexOf(this.iValue)
+                      const num = value.indexOf(this.iValue)
+                       if(num != -1){
+                           return this.iValue;
+                       }
+                    })
+                }
+
+            },
+            watch:{
+                selectedIndex(val){
+                    if(val < 0 ){
+                        this.selectedIndex = this.messesList.length - 1;
+                        console.log(this.selectedIndex)
+                    }
+                    if(val >= this.messesList.length){
+                        this.selectedIndex = 0;
+                    }
+                },
+                messesList(val){
+                    if(this.messesList.length == 1 && this.iValue == val[0] ) {
+                        this.isShow = false;
+                    }
+                    if(this.messesList.length != 1 ){
+                        this.isShow = true;
+                    }
+                },
+                iValue(val){
+                    if(this.iValue == ""){
+                        this.onOff = false;
+                    }
+                }
+            },
+            methods:{
+                search(){
+                    this.onOff = true;
+                },
+                select(item){
+                     this.iValue = item;
+                },
+                up(){
+                    this.selectedIndex --;
+                },
+                down(){
+                    this.selectedIndex ++;
+                },
+                enter(){
+                    this.iValue = this.messesList[this.selectedIndex];
+                },
+                mousemove(index){
+                    this.selectedIndex = index;
+                }
+            }
+        })
+    const vm = new Vue({
+        el : '#app',
+        template:`
+        <div id="app">
+       <Search v-model="messes"/>
+        </div>
+        `,
+        data:{
+            messes: [
+                    '你',
+                    '你好',
+                    '你好！之华',
+                    '你好之华',
+                    '你好旧时光',
+                    '你好少将大人',
+                    '你好英文'
+                ]
+        }
+    })
+    </script>
+</body>
+</html>
