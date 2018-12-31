@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        
+        <span></span>
+
+    </div>
+    <script>
+       
+        
+    const vm = new Vue({
+        el : '#app',
+        methods:{
+            itemClasses(){
+                const Legnth = 5;
+        const cls_on = 'on';
+        const cls_half = 'half';
+        const cls_off = 'off';
+            let result=[];
+            const score = Math.floor(this.score*2)/2;
+            const hasDecimal = score%1 !=0;
+            const integer = Math.floor(score);
+            for(let i = 0; i < integer;i++){
+                result.push(cls-on);
+            }
+            if(hasDecimal){
+                result.push(cls-half);
+            }
+            while(result.length < Length){
+                result.push(cls-off)
+            }
+            return result;
+        }
+        }
+        
+    })
+    </script>
+</body>
+</html>

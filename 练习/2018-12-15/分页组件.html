@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .page{
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .page li.active {
+            border-color: #2d8cf0;
+        }
+        .page li {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            border: 1px solid #dcdee2;
+            border-radius: 4px;
+            line-height: 32px;
+            text-align: center;
+            margin-right: 5px;
+            cursor: pointer;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <script>
+   Vue.component('Page',{
+       props:{
+           total:Number,
+           size:{
+               type:Number,
+               default:10
+           }
+       },
+       template:`
+       <ul class="page">
+                    <li @click="prev"><</li>
+                    <li 
+                        @click="click(item)" 
+                        :class="{
+                            active: selectIndex === item
+                        }"
+                        v-for="item in concatBtns">
+                        {{item !== null ? item  : '...'}}
+                    </li>
+                    <li @click="next">></li>
+                </ul>
+       `,
+       data(){
+           return {
+               selectIndex:1
+           }
+       },
+      
+       computed:{
+           //每一页显示的条数
+           pages(){
+               let arr=[];
+               for(let i = 0; i < this.total / 10;i++){
+                   arr.push(i + 1);
+               }
+               return arr;
+           },
+           //省略号前
+           Before(){
+               if(this.selectIndex < this.pages.length/2){
+                   return this.pages.filter((item,index) => {
+                       return index <= this.selectIndex + 2;
+                   })
+               }else{
+                   return [this.pages[0]];
+               }
+           },
+           //省略号后
+           After(){
+               if(this.selectIndex < this.pages.length / 2){
+                   return [this.pages[this.pages.length-1]];
+               }else{
+                   return this.pages.filter((item,index) =>{
+                       return index >= this.selectIndex - 2;
+                   })
+               }
+           },
+           //合并
+           concatBtns(){
+               return [].concat(this.Before,null,this.After);
+           }
+       },
+       methods:{
+            click(item){
+                if(item != null)
+                 this.selectIndex = item;
+            },
+            prev(){
+                    this.selectIndex --;
+                    if(this.selectIndex < 0){
+                        this.selectIndex = 0;
+                    }
+            },
+            next(){
+                    this.selectIndex ++;
+                    if(this.selectIndex > this.pages.length -1){
+                        this.selectIndex = this.pages.length -1;
+                    }
+            }
+       }
+
+
+   })
+    const vm = new Vue({
+        el : '#app',
+        template:`
+        <div id="app">
+         <Page :total="100"/>
+        </div>
+        `
+        
+    })
+    </script>
+</body>
+</html>

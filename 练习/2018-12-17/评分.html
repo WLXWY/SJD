@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+        }
+
+        .rate {
+            margin: 30px auto;
+            display: flex;
+        }
+
+        .rate li {
+            list-style: none;
+            margin-right: 5px;
+            color:#ccc;
+            position: relative;
+            transition:  color linear .1s;
+        }
+        .rate li.active{
+            color: rgba(255, 238, 4, 0.973);
+            transition:   color linear .1s;
+            top:1px;
+        }
+        .star-five {
+            position: relative;
+        }
+        .star-five .star {
+            width: 0;
+            height: 0;
+            border-bottom: 12px solid currentColor;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            margin-top: 2px;
+            transform: rotate(39deg);
+            position: absolute;
+        }
+        .star-five .star-2 {
+            border-bottom: 12px solid currentColor;
+            left: -2px;
+            transform: rotate(322deg);
+        }
+        .star-five .star-3 {
+            border-bottom: 12px solid currentColor;
+            transform: rotate(106deg)
+        }
+        .container {
+            margin-top: 10px;
+            margin-right: 30px;
+            color:currentColor;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" style="color:red">
+  hahah 
+    </div>
+    <script>
+        Vue.component('Star', {
+            template: `
+            <div class="container">
+                <div :style="{color:'currentColor'}" class="star-five">
+                    <div class="star star-1"></div>
+                    <div class="star star-2"></div>
+                    <div class="star star-3"></div>
+                </div>
+            </div>
+            `
+        })
+        Vue.component('Rate', {
+            template: `
+            <div class="rate">
+                <li @click="click(index)" @mouseout="mouseout(index)"   @mousemove="mousemove(index)"  :class="{active: selectIndex >= index?true:false}" v-for="(item,index) in 5">
+                    <Star/>
+                </li>
+            </div>
+            `,
+            data(){
+                return{
+                    selectIndex:0,
+                    color:['rgba(255, 238, 4, 0.973)',"#ccc"],
+                    arr:[0,1,2,3,4],
+                    onOff : true
+                }
+            },
+            methods:{
+                mousemove(index){
+                    this.selectIndex = index;
+                },
+                mouseout(index){
+                    this.selectIndex = null;
+                },
+                click(index){
+                   let arr1 = this.arr.filter((item,index)=>{
+                      return this.selectIndex >= this.arr[index]
+                   })
+                
+                   console.log(arr1)
+                //   return arr1;
+                
+                },
+               
+                
+            }
+
+        })
+        const vm = new Vue({
+            el: '#app',
+            template: `
+            <div id="app">
+            <Rate/>         
+            </div>
+             `
+
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+    .box{
+        background: red;
+    }
+    </style>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <script>
+    Vue.component('Test',{
+        template:`
+        <div class="test">
+        <slot/>
+        </div>
+    })
+    Vue.component('Admin',{
+        template:`
+        <Test>
+        hah
+        <slot/>
+        </Test>
+        `
+    })
+    const vm = new Vue({
+        el : '#app',
+        template:`
+        <Test>
+        <div class="box">
+        <h4>hehe</h4>
+        <p>kiko</p>
+        </div>
+        </Test>
+        `
+    })
+    </script>
+</body>
+</html>
