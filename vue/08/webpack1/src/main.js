@@ -1,6 +1,6 @@
 import './assets/style/index.less';
 import './assets/style/index.css';
-import './assets/style/bootstrap.css'
+import './assets/style/bootstrap.css';
 
 import Vue from 'vue';
 import App from './App';

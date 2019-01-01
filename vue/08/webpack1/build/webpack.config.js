@@ -49,10 +49,6 @@ module.exports = {
     },
     plugins:[
         new VueLoaderPlugin(),
-        new HtmlWebpackPlugin({ //把文件缓存到html中，减少硬盘的负担
-            template:path.resolve('index.html'),
-            filename:'index.html'
-        })
     ],
     mode:'development',
     resolve:{
