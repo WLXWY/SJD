@@ -17,8 +17,8 @@ export default {
     Test,
     Button
   },
-  beforeCreate() {
-    console.log('组件的生命周期')
+  beforeCreate(){
+     console.log('组件的生命周期')
   }
 }
 </script>

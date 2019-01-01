@@ -5,27 +5,20 @@ import App from './App'
 
 Vue.config.productionTip = false
 
-// Vue.mixin({
-//   data(){
-//     return {
-//       prefix:'lemon-'
-//     }
-//   },
-//   methods:{
-
-//   },
-//   beforeCreate() {
-//     console.log('混入的生命周期')
-//   }
-// })
-
-const mixin = {
-  methods:{
-    $alert(){
-      alert('mixin method')
+Vue.mixin({
+   data(){
+    return {
+      prefix:'lemon-'
     }
+  },
+  methods:{
+  },
+  beforeCreate() {
+    console.log('混入的生命周期')
   }
-}
+})
+
+
 
 
 

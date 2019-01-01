@@ -9,5 +9,5 @@ const mixin = {
         alert('mixin method')
       }
     }
-  }
+}
   export default mixin;
