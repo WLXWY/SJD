@@ -2,11 +2,11 @@ import axios from 'axios'
 import qs  from 'qs'
 const http = axios.create({
     baseURL:'/proxyapi',//基础路径
-    timeout:2000,       //超时
+    timeout:4000,       //超时
     headers:{           //自定义header
         token:localStorage.getItem('token'),
         t:new Date().getTime(),
-        'Content-Type':'application/x-www-form-urlencoded'
+        // 'Content-Type':'application/x-www-form-urlencoded'
     }
 }
 )
@@ -23,7 +23,7 @@ http.interceptors.request.use((options) => {
 
 //响应拦截器
 http.interceptors.response.use((response) => {
-    console.log(respones)//所有的响应数据
+    // console.log(response)//所有的响应数据
     
     return response
 })
